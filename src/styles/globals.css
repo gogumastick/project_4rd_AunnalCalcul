@@ -3,6 +3,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Handjet:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=New+Amsterdam&family=Zen+Tokyo+Zoo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 
 * {
@@ -14,18 +17,11 @@
 }
 
 /* Optionally apply the font globally */
-body, input, button {
-  /* font-family: "IBM Plex Sans KR", sans-serif;
-  font-weight: 500;
-  font-style: normal; */
-  font-family: "Handjet", sans-serif;
+body {
+  font-family: 'Noto Sans KR', sans-serif;
   font-optical-sizing: auto;
-  font-weight: 400;
+  font-weight: weight;
   font-style: normal;
-  font-variation-settings:
-    "ELGR" 1,
-    "ELSH" 2;
-  
 }
 
 /* :root {

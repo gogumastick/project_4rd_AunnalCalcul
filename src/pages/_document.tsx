@@ -4,7 +4,10 @@ import { ServerStyleSheet } from 'styled-components';
 const Document = () => {
     return (
         <Html lang="en">
-            <Head />
+            <Head>
+                {/* <meta name="viewport" content="initial-scale=1, width=device-width" /> */}
+            </Head>
+
             <body>
                 <Main />
                 <NextScript />
@@ -14,26 +17,25 @@ const Document = () => {
 };
 
 Document.getInitialProps = async (ctx: any) => {
-  const sheet = new ServerStyleSheet();
-  const originalRenderPage = ctx.renderPage;
-  try {
-    ctx.renderPage = () =>
-      originalRenderPage({
-        enhanceApp: (App: any) => (props: any) =>
-          sheet.collectStyles(<App {...props} />),
-      });
-    const initialProps = await ctx.defaultGetInitialProps(ctx);
-    return {
-      ...initialProps,
-      styles: (
-        <>
-          {initialProps.styles}
-          {sheet.getStyleElement()}
-        </>
-      ),
-    };
-  } finally {
-    sheet.seal();
-  }
+    const sheet = new ServerStyleSheet();
+    const originalRenderPage = ctx.renderPage;
+    try {
+        ctx.renderPage = () =>
+            originalRenderPage({
+                enhanceApp: (App: any) => (props: any) => sheet.collectStyles(<App {...props} />),
+            });
+        const initialProps = await ctx.defaultGetInitialProps(ctx);
+        return {
+            ...initialProps,
+            styles: (
+                <>
+                    {initialProps.styles}
+                    {sheet.getStyleElement()}
+                </>
+            ),
+        };
+    } finally {
+        sheet.seal();
+    }
 };
 export default Document;

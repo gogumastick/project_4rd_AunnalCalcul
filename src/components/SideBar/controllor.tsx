@@ -1,0 +1,99 @@
+
+
+export const sideBarData = [
+
+    {
+        id: 1,
+        name:'홈',
+        url: '/dashBoard/home'
+    },
+    {
+        id:2,
+        name:'기안서',
+        Children:[
+            {
+                id:1,
+                name:'기안서 작성',
+                url:'/dashBoard/documents/writingDocu'
+            },
+            {
+                id:2,
+                name:'미결재',
+                url:'/dashBoard/documents/unapprovedDocu'
+            },
+            {
+                id:3,
+                name:'결재현황',
+                url:'/dashBoard/documents/approvedDocu'
+            },
+
+        ]
+    },
+    {
+        id:3,
+        name:'연차',
+        Children:[
+            {
+                id:1,
+                name:'휴가현황',
+                url:'/dashBoard/vacation/vacationStatus'
+            },
+            {
+                id:2,
+                name:'잔여연차',
+                url:'/dashBoard/vacation/remainingVacation'
+            },
+            {
+                id:3,
+                name:'휴가신청',
+                url:'/dashBoard/vacation/requestedVacation'
+            },
+            {
+                id:4,
+                name:'미결재',
+                url:'/dashBoard/vacation/unapprovedVacation'
+            },
+            {
+                id:5,
+                name:'결재현황',
+                url:'/dashBoard/vacation/approvedVacation'
+            },
+
+        ]
+    },
+    {
+        id:4,
+        name:'관리',
+        Children:[
+            {
+                id:1,
+                name:'직원',
+                url:'/dashBoard/mng/employeeMng'
+            },
+            {
+                id:2,
+                name:'조직',
+                url:'/dashBoard/mng/organizationMng'
+            },
+ 
+        ]
+    },
+    {
+        id:5,
+        name:'회사설정',
+        Children:[
+            {
+                id:1,
+                name:'일반',
+                url:'/dashBoard/companyProfile/commonCompany'
+            },
+            {
+                id:2,
+                name:'초기화',
+                url:'/dashBoard/companyProfile/resetCompany'
+            },
+ 
+        ]
+    },
+    
+]
