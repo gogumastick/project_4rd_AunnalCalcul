@@ -25,8 +25,8 @@ const DocumentsMenu = (
 
     // sideBar > module > menu에 들어 갈 텍스트
     // const menuText = ['기안서 작성', '미결재', '결재현황'];
-    // menu이름찾기
-    const moduleName = sideBarData.find((data) => data.id === 2);
+    // menu이름찾기(module이름찾기 id===4 관리임)
+    const moduleName = sideBarData.find((data) => data.id === 4);
     const menuNames = moduleName?.Children || [];
 
     const router = useRouter();
