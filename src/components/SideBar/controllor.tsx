@@ -4,12 +4,12 @@ export const sideBarData = [
 
     {
         id: 1,
-        name:'홈',
+        name:'홈(N/A)',
         url: '/dashBoard/home'
     },
     {
         id:2,
-        name:'기안서',
+        name:'기안서(N/A)',
         Children:[
             {
                 id:1,
@@ -31,7 +31,7 @@ export const sideBarData = [
     },
     {
         id:3,
-        name:'연차',
+        name:'연차(N/A)',
         Children:[
             {
                 id:1,
@@ -63,7 +63,7 @@ export const sideBarData = [
     },
     {
         id:4,
-        name:'관리',
+        name:'관리(개발ing)',
         Children:[
             {
                 id:1,
@@ -80,7 +80,7 @@ export const sideBarData = [
     },
     {
         id:5,
-        name:'회사설정',
+        name:'회사설정(N/A)',
         Children:[
             {
                 id:1,

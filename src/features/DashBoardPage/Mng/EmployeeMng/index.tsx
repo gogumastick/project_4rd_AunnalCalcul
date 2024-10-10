@@ -3,8 +3,9 @@ import EmployeeMngTopBtn from '@/components/DashBoardBody/Mng/EmployeeMng/MngTop
 import { DashBoardPageStyled } from '../../styled';
 import { MngPageStyled } from '../styled';
 import { sideBarData } from '@/components/SideBar/controllor';
-import ApiOutlinedIcon from '@mui/icons-material/ApiOutlined';
+// import ApiOutlinedIcon from '@mui/icons-material/ApiOutlined';
 import AddEmployeeModal from '@/components/DashBoardBody/Mng/EmployeeMng/AddEmployeeModal';
+
 
 const EmployeeMngPage = () => {
     // module이름찾기 id===4 관리임
@@ -27,6 +28,7 @@ const EmployeeMngPage = () => {
                         
                     </div>
                     <div className="bodyArea"></div>
+                    
                     <AddEmployeeModal/>
                 </MngPageStyled>
             </div>

@@ -2,11 +2,11 @@ import Header from '@/features/Header';
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { AppProvider } from '@toolpad/core/AppProvider';
-import { ThemeProvider } from '@mui/material/styles';
+// import { ThemeProvider } from '@mui/material/styles';
 // Material-UI의 기본 스타일 초기화
 import CssBaseline from '@mui/material/CssBaseline';
 // 커스텀 테마 가져오기(아..안되네)
-import theme from '../theme/theme';
+// import theme from '../theme/theme';
 // fortawesome쓰고 싶어
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
