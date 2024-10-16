@@ -97,7 +97,7 @@ const NavBar = (
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                            News
+                            회사로고나 이름 위치
                         </Typography>
                         {/* contrastText의 검은색 상속 */}
                         {/* <Button color="inherit">Login</Button> */}

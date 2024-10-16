@@ -1,5 +1,7 @@
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import AirplanemodeActiveOutlinedIcon from '@mui/icons-material/AirplanemodeActiveOutlined';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 import VacationMenu from './VacationMenu';
 
 import { useRecoilState } from 'recoil';
@@ -53,6 +55,7 @@ const VacationModule = (
                             className={`sideBarListText ${sideBarListTextClose ? 'hide' : 'show'}`}
                             primary={moduleName?.name}
                         />
+                        {vacationMenuOpen ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
                 </ListItem>
 

@@ -1,5 +1,7 @@
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import SettingsSuggestOutlinedIcon from '@mui/icons-material/SettingsSuggestOutlined';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 import MngMenu from './MngMenu';
 import { useRecoilState } from 'recoil';
 import { mngMenuState,sideBarListTextState } from '@/utill/atom';
@@ -42,6 +44,7 @@ const MngModule = (
                             className={`sideBarListText ${sideBarListTextClose ? 'hide' : 'show'}`}
                             primary={moduleName?.name}
                         />
+                        {mngMenuOpen ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
                 </ListItem>
 

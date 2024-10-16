@@ -1,6 +1,6 @@
 import EmployeeMngPage from '@/features/DashBoardPage/Mng/EmployeeMng';
 
-const employeeMng = () => {
+const EmployeeMng = () => {
     return <EmployeeMngPage />;
 };
-export default employeeMng;
+export default EmployeeMng;

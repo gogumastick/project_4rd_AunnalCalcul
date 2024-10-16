@@ -4,6 +4,8 @@ import DocumentsMenu from './DocumentsMenu';
 import { useRecoilState } from 'recoil';
 import { documentsMenuState,sideBarListTextState } from '@/utill/atom';
 import { sideBarData } from '../../controllor';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 
 interface ModuleProps {
     // documentsOpen: boolean;
@@ -41,6 +43,7 @@ const DocumentsModule = (
                             className={`sideBarListText ${sideBarListTextClose ? 'hide' : 'show'}`}
                             primary={moduleName?.name}
                         />
+                        {documentsMenuOpen ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
                 </ListItem>
 

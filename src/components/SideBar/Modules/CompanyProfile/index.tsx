@@ -4,6 +4,8 @@ import CompanyProfileMenu from './CompanyProfileMenu';
 import { useRecoilState } from 'recoil';
 import { companyProfileMenuState,sideBarListTextState } from '@/utill/atom';
 import { sideBarData } from '../../controllor';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 
 interface ModuleProps {
     // companyProfileOpen: boolean;
@@ -42,6 +44,7 @@ const CompanyProfileModule = (
                             className={`sideBarListText ${sideBarListTextClose ? 'hide' : 'show'}`}
                             primary={moduleName?.name}
                         />
+                        {companyProfileMenuOpen ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
                 </ListItem>
 

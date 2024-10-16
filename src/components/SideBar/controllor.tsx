@@ -26,6 +26,11 @@ export const sideBarData = [
                 name:'결재현황',
                 url:'/dashBoard/documents/approvedDocu'
             },
+            {
+                id:4,
+                name:'결재완료',
+                url:'/dashBoard/documents/totalDocu'
+            },
 
         ]
     },
@@ -58,6 +63,11 @@ export const sideBarData = [
                 name:'결재현황',
                 url:'/dashBoard/vacation/approvedVacation'
             },
+            {
+                id:6,
+                name:'알림현황',
+                url:'/dashBoard/vacation/notiVacation'
+            },
 
         ]
     },
@@ -75,6 +85,11 @@ export const sideBarData = [
                 name:'조직',
                 url:'/dashBoard/mng/organizationMng'
             },
+            {
+                id:3,
+                name:'연차설정',
+                url:'/dashBoard/mng/vactionMng'
+            },
  
         ]
     },
@@ -89,11 +104,13 @@ export const sideBarData = [
             },
             {
                 id:2,
-                name:'초기화',
-                url:'/dashBoard/companyProfile/resetCompany'
+                name:'결제수단 등록',
+                url:'/dashBoard/companyProfile/paymentCompany'
             },
  
         ]
     },
     
 ]
+
+

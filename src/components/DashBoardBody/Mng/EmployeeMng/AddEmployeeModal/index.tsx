@@ -7,10 +7,11 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 // import { Input, Button } from 'antd';
 import { useRecoilState } from 'recoil';
-import { addEmployeeModalState } from '@/utill/atom';
+import { addEmployeeModalState, addedEmployeeState } from '@/utill/atom';
 import { useFormik } from 'formik';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { MngComponentsStyled, AddEmplModalBoxStyled } from '../../styled';
+import { addEmplInitialValues } from '@/utill/data';
 
 // import { useRouter } from 'next/router';
 // import { sideBarData } from '@/components/SideBar/controllor';
@@ -78,52 +79,77 @@ const AddEmployeeModal = () => {
         p: 3,
     };
 
-    const [addedEmployee, setAddedEmployee] = useState<object[]>([]);
-    // console.log('AddEmployeeModal에서 addedEmployee', addedEmployee);
+    const [addedEmployee, setAddedEmployee] = useRecoilState(addedEmployeeState);
+    console.log('AddEmployeeModal에서 addedEmployee', addedEmployee);
+
+    // formik 초기값을 addEmplInitialValues 배열을 사용해 설정
+    const initialFormValues = addEmplInitialValues.reduce<{ [key: string]: any }>((acc, field) => {
+        acc[field.name] = field.value;
+        return acc;
+    }, {});
+
+    // initialFormValues객체 할당
+    // id 값 1~3 사원번호 직원이름 직급
+    const useFormikDivBasic = addEmplInitialValues.filter((field) => field.id >= 1 && field.id <= 3);
+    // console.log('AddEmployeeModal에서 useFormikDivOne배열', useFormikDivBasic);
+    // id 값 4~5 직원 부서 이메일 주소
+    const useFormikDivEmail = addEmplInitialValues.filter((field) => field.id >= 4 && field.id <= 5);
+    // id 값 6~8 액세스권한 본조직 관리조직
+    const useFormikDivOrg = addEmplInitialValues.filter((field) => field.id >= 6 && field.id <= 8);
+    // id 값 9 기초연차
+    const useFormikBegVac = addEmplInitialValues.find((field) => field.id === 9);
+    // id 값 10 연차발생여부 체크박스
+    const useFormikOccuVacCheck = addEmplInitialValues.find((field) => field.id === 10);
+    // id 값 11 입사일
+    const useFormikJoinDate = addEmplInitialValues.find((field) => field.id === 11);
+    // id 값 12 퇴사여부 체크박스
+    const useFormikRet = addEmplInitialValues.find((field) => field.id === 12);
+    // id 값 13 퇴사일
+    const useFormikRetDate = addEmplInitialValues.find((field) => field.id === 13);
+    // id 값 14 전화번호
+    const useFormikPhone = addEmplInitialValues.find((field) => field.id === 14);
 
     const addEmployeeFormik = useFormik({
-        initialValues: {
-            //사원번호
-            emplNo: '',
-            // 이름
-            emplName: '',
-            // 직급
-            emplRank: '',
-            // 이메일
-            emplEmail: '',
-            // 소속조직이메일(선택사항)
-            emplOrgEmail: '',
-
-            // 액세스 권한(선택으로 입력)
-            emplAccessAuth: '',
-            // 본조직(선택으로 입력)
-            emplOrgOrganization: '',
-            // 관리조직(선택으로 입력)
-            emplMngOrganization: '',
-            // 기초연차
-            emplBeginningVacation: '',
-            // 연차발생여부(체크박스 T/F 값)
-            emplOccurrenceVacation: '',
-            // 입사일
-            emplJoinDate: '',
-            // 퇴사여부
-            emplRetire: '',
-            // 퇴사일
-            emplRetireDate: '',
-
-            // 휴대폰번호
-            emplPhoneNo: '',
-        },
+        initialValues: initialFormValues,
+        // {
+        //     //사원번호
+        //     emplNo: '',
+        //     // 이름
+        //     emplName: '',
+        //     // 직급
+        //     emplRank: '',
+        //     // 이메일
+        //     emplEmail: '',
+        //     // 소속조직이메일(선택사항)
+        //     emplOrgEmail: '',
+        //     // 액세스 권한(선택박스로 입력)
+        //     emplAccessAuth: '',
+        //     // 본조직(선택박스로 입력)
+        //     emplOrgOrganization: '',
+        //     // 관리조직(선택박스으로 입력)
+        //     emplMngOrganization: '',
+        //     // 기초연차
+        //     emplBeginningVacation: '',
+        //     // 연차발생여부(체크박스 T/F 값)
+        //     emplOccurrenceVacation: '',
+        //     // 입사일
+        //     emplJoinDate: '',
+        //     // 퇴사여부
+        //     emplRetire: '',
+        //     // 퇴사일
+        //     emplRetireDate: '',
+        //     // 휴대폰번호
+        //     emplPhoneNo: '',
+        // },
         onSubmit: (values) => {
             // if (values.empNo === '') {
-            //     console.log('AddEmployeeModalDetail에서 뭐가 올까');
+            //     console.log('AddEmployeeModal에서 뭐가 올까');
 
             //     return;
             // }
-            const newAddedEmployee = { id: Date.now(), ...values };
+            const newAddedEmployee = { id: Date.now() + Math.random().toString(36), ...values };
             setAddedEmployee([...addedEmployee, newAddedEmployee]);
-            // 콘솔 로그로 폼 값 확인
-            console.log('직원추가 데이터:', values);
+            // console.log('직원추가 데이터:', values);
         },
     });
     // Modal창외 범위 클릭시 닫기
@@ -141,10 +167,10 @@ const AddEmployeeModal = () => {
 
     // 퇴사여부로 날짜 입력Box여닫기
     const [retireTextBoxClose, setRetireTextBoxClose] = useState<boolean>(false);
-    console.log('AddEmployeeModal에서 retireTextBoxClose', retireTextBoxClose);
+    // console.log('AddEmployeeModal에서 retireTextBoxClose', retireTextBoxClose);
     const [retireDateBoxOpen, setRetireDateBoxOpen] = useState<boolean>(false);
-    console.log('AddEmployeeModal에서 retireDateBoxOpen', retireDateBoxOpen);
-
+    // console.log('AddEmployeeModal에서 retireDateBoxOpen', retireDateBoxOpen);
+    // 퇴사여부 CheckBox
     const retireCheckBox = () => {
         setRetireTextBoxClose(!retireTextBoxClose);
         setRetireDateBoxOpen(!retireDateBoxOpen);
@@ -153,7 +179,6 @@ const AddEmployeeModal = () => {
     return (
         <MngComponentsStyled>
             <div>
-                {/* <Button onClick={handleOpen}>Open modal</Button> */}
                 <Modal
                     open={addEmployeeModalOpen}
                     onClose={handleClose}
@@ -162,7 +187,6 @@ const AddEmployeeModal = () => {
                 >
                     <Box sx={style} className="addEmplMuiModalBox">
                         <AddEmplModalBoxStyled>
-                            {/* 입력 폼 */}
                             <form onSubmit={addEmployeeFormik.handleSubmit}>
                                 <TextField
                                     className="addEmplTitleTextField"
@@ -170,174 +194,155 @@ const AddEmployeeModal = () => {
                                     label="직원정보"
                                     variant="standard"
                                 />
+                                {/* Map을 사용하여 조건에 따른 TextField 렌더링 */}
+                                {/* id 값 1~3 사원번호 직원이름 직급 */}
                                 <div className="emplModalBox">
-                                    {/* <div className="emplBoxContents">사원 번호</div> */}
-                                    <TextField
-                                        id="filled-basic"
-                                        label="사원 번호"
-                                        className="addEmplInputBox"
-                                        name="emplNo"
-                                        onChange={addEmployeeFormik.handleChange}
-                                        value={addEmployeeFormik.values.emplNo}
-                                        size='small'
-                                    />
-                                    <TextField
-                                        id="filled-basic"
-                                        label="직원 이름"
-                                        className="addEmplInputBox"
-                                        name="emplName"
-                                        onChange={addEmployeeFormik.handleChange}
-                                        value={addEmployeeFormik.values.emplName}
-                                        size='small'
-                                    />
-                                    <TextField
-                                        id="filled-basic"
-                                        label="직급"
-                                        className="addEmplInputBox"
-                                        name="emplRank"
-                                        onChange={addEmployeeFormik.handleChange}
-                                        value={addEmployeeFormik.values.emplRank}
-                                        size='small'
-                                    />
+                                    {useFormikDivBasic.map((field) => (
+                                        <TextField
+                                            key={field.id}
+                                            id="filled-basic"
+                                            label={field.label}
+                                            className={field.className}
+                                            name={field.name}
+                                            onChange={addEmployeeFormik.handleChange}
+                                            value={addEmployeeFormik.values[field.name]}
+                                            size="small"
+                                        />
+                                    ))}
+                                </div>
+                                {/* id 값 4~5 직원 부서 이메일 주소 */}
+                                <div className="emplModalBox">
+                                    {useFormikDivEmail.map((field) => (
+                                        <TextField
+                                            key={field.id}
+                                            id="filled-basic"
+                                            label={field.label}
+                                            className={field.className}
+                                            name={field.name}
+                                            onChange={addEmployeeFormik.handleChange}
+                                            value={addEmployeeFormik.values[field.name]}
+                                            size="small"
+                                        />
+                                    ))}
+                                </div>
+                                {/* id 값 6~8 직원 부서 이메일 주소 */}
+                                <div className="emplModalBox">
+                                    {useFormikDivOrg.map((field) => (
+                                        <TextField
+                                            key={field.id}
+                                            id="filled-basic"
+                                            label={field.label}
+                                            className={field.className}
+                                            name={field.name}
+                                            onChange={addEmployeeFormik.handleChange}
+                                            value={addEmployeeFormik.values[field.name]}
+                                            size="small"
+                                        />
+                                    ))}
                                 </div>
 
                                 <div className="emplModalBox">
-                                    <TextField
-                                        id="filled-basic"
-                                        label="직원 이메일 주소"
-                                        className="addEmplInputBoxExp"
-                                        name="emplEmail"
-                                        onChange={addEmployeeFormik.handleChange}
-                                        value={addEmployeeFormik.values.emplEmail}
-                                        size='small'
-                                    />
-                                    <TextField
-                                        id="filled-basic"
-                                        label="본조직 이메일 주소"
-                                        className="addEmplInputBoxExp"
-                                        name="emplOrgEmail"
-                                        onChange={addEmployeeFormik.handleChange}
-                                        value={addEmployeeFormik.values.emplOrgEmail}
-                                        size='small'
-                                    />
+                                    {/* id 값 9 기초연차 */}
+                                    {useFormikBegVac && (
+                                        <TextField
+                                            key={useFormikBegVac.id}
+                                            id="filled-basic"
+                                            label={useFormikBegVac.label}
+                                            className={useFormikBegVac.className}
+                                            name={useFormikBegVac.name}
+                                            onChange={addEmployeeFormik.handleChange}
+                                            value={addEmployeeFormik.values[useFormikBegVac.name]}
+                                            size="small"
+                                        />
+                                    )}
+                                    {/* id 값 10 연차발생여부 체크박스 */}
+                                    {useFormikOccuVacCheck && (
+                                        <FormControlLabel
+                                            control={<Checkbox defaultChecked />}
+                                            // className={useFormikOccuVacCheck.className}
+                                            sx={{ marginLeft: 2, paddingTop : 1.2}}
+                                            key={useFormikOccuVacCheck.id}
+                                            label={useFormikOccuVacCheck.label}
+                                            name={useFormikOccuVacCheck.name}
+                                            onChange={addEmployeeFormik.handleChange}
+                                            value={addEmployeeFormik.values[useFormikOccuVacCheck.name]}
+                                        />
+                                    )}
                                 </div>
 
                                 <div className="emplModalBox">
-                                    <TextField
-                                        id="filled-basic"
-                                        label="액세스권한"
-                                        className="addEmplInputBox"
-                                        name="emplAccessAuth"
-                                        onChange={addEmployeeFormik.handleChange}
-                                        value={addEmployeeFormik.values.emplAccessAuth}
-                                        size='small'
-                                    />
-                                </div>
-                                <div className="emplModalBox">
-                                    <TextField
-                                        id="filled-basic"
-                                        label="본조직"
-                                        className="addEmplInputBox"
-                                        name="emplOrgOrganization"
-                                        onChange={addEmployeeFormik.handleChange}
-                                        value={addEmployeeFormik.values.emplOrgOrganization}
-                                        size='small'
-                                    />
-                                    <TextField
-                                        id="filled-basic"
-                                        label="관리조직"
-                                        className="addEmplInputBox"
-                                        name="emplMngOrganization"
-                                        onChange={addEmployeeFormik.handleChange}
-                                        value={addEmployeeFormik.values.emplMngOrganization}
-                                        size='small'
-                                    />
-                                </div>
-                                <div className="emplModalBox">
-                                    <TextField
-                                        id="filled-basic"
-                                        label="기초연차"
-                                        className="addEmplInputBox"
-                                        name="emplBeginningVacation"
-                                        onChange={addEmployeeFormik.handleChange}
-                                        value={addEmployeeFormik.values.emplBeginningVacation}
-                                        size='small'
-                                    />
-
-                                    <FormControlLabel
-                                        control={<Checkbox defaultChecked />}
-                                        sx={{ marginLeft: 2, width: 600 }}
-                                        label="연차발생여부(기본값:여)"
-                                        name="emplMngOrganization"
-                                        onChange={addEmployeeFormik.handleChange}
-                                        value={addEmployeeFormik.values.emplOccurrenceVacation}
-                                    />
-                                </div>
-                                <div className="emplModalBox">
-                                    <TextField
-                                        id="filled-basic"
-                                        label="입사일"
-                                        className="addEmplInputBox"
-                                        name="emplJoinDate"
-                                        onChange={addEmployeeFormik.handleChange}
-                                        value={addEmployeeFormik.values.emplJoinDate}
-                                        size='small'
-                                    />
-
-                                    <Checkbox
-                                        // 퇴사여부 체크박스
-                                        sx={{ marginLeft: 2 }}
-                                        name="emplRetire"
-                                        onChange={(e) => {
-                                            addEmployeeFormik.handleChange(e);
-                                            retireCheckBox();
-                                        }}
-                                        value={addEmployeeFormik.values.emplRetire}
-                                    />
+                                    {/* id 값 11 입사일 */}
+                                    {useFormikJoinDate && (
+                                        <TextField
+                                            key={useFormikJoinDate.id}
+                                            id="filled-basic"
+                                            label={useFormikJoinDate.label}
+                                            className={useFormikJoinDate.className}
+                                            name={useFormikJoinDate.name}
+                                            onChange={addEmployeeFormik.handleChange}
+                                            value={addEmployeeFormik.values[useFormikJoinDate.name]}
+                                            size="small"
+                                        />
+                                    )}
+                                    {/* id 값 12 퇴사여부 체크박스 */}
+                                    {useFormikRet && (
+                                        <Checkbox
+                                            sx={{ marginLeft: 2, paddingTop : 2 }}
+                                            // className={useFormikRet.className}
+                                            name={useFormikRet.name}
+                                            onChange={(e) => {
+                                                addEmployeeFormik.handleChange(e);
+                                                retireCheckBox();
+                                            }}
+                                            value={addEmployeeFormik.values[useFormikRet.name]}
+                                        />
+                                    )}
+                                    
                                     <div className={`addEmplRetireTextBox ${retireTextBoxClose ? 'hide' : 'show'}`}>
                                         퇴사여부(기본값:부)
                                     </div>
-
-                                    <TextField
-                                        id="filled-basic"
-                                        label="퇴사일"
-                                        className={`addEmplRetireDateBox ${retireDateBoxOpen ? 'show' : 'hide'}`}
-                                        name="emplRetireDate"
-                                        onChange={addEmployeeFormik.handleChange}
-                                        value={addEmployeeFormik.values.emplRetireDate}
-                                        size='small'
-                                    />
+                                    {/* id 값 13 퇴사여부 체크박스 */}
+                                    {useFormikRetDate && (
+                                        <TextField
+                                            key={useFormikRetDate.id}
+                                            id="filled-basic"
+                                            label={useFormikRetDate.label}
+                                            className={`${useFormikRetDate.className} ${retireDateBoxOpen ? 'show' : 'hide'}`}
+                                            name={useFormikRetDate.name}
+                                            onChange={addEmployeeFormik.handleChange}
+                                            value={addEmployeeFormik.values[useFormikRetDate.name]}
+                                            size="small"
+                                        />
+                                    )}
                                 </div>
 
                                 <div className="emplModalBox">
-                                    <TextField
-                                        id="filled-basic"
-                                        label="전화번호"
-                                        className="addEmplInputBox"
-                                        name="emplPhoneNo"
-                                        onChange={addEmployeeFormik.handleChange}
-                                        value={addEmployeeFormik.values.emplPhoneNo}
-                                        size='small'
-                                    />
-                                    <div className="addComment">* 입력된 전화번호로 직원 합류 코드 발송 됩니다</div>
+                                    {useFormikPhone && (
+                                        <TextField
+                                            key={useFormikPhone.id}
+                                            id="filled-basic"
+                                            label={useFormikPhone.label}
+                                            className={useFormikPhone.className}
+                                            name={useFormikPhone.name}
+                                            onChange={addEmployeeFormik.handleChange}
+                                            value={addEmployeeFormik.values[useFormikPhone.name]}
+                                            size="small"
+                                        />
+                                    )}
+                                    <div className="addEmplComment">
+                                        🚀 입력된 전화번호로 직원 합류 코드 발송 됩니다
+                                    </div>
                                 </div>
 
                                 <br />
                                 <div className="emplBtnBox">
-                                    <Button variant="outlined" className='closeBnt' onClick={handleClose}>
+                                    <Button variant="outlined" className="closeBnt" onClick={handleClose}>
                                         닫기
                                     </Button>
 
-                                    <Button variant="contained" className='saveBnt' onClick={registerEmpl}>
+                                    <Button variant="contained" className="saveBnt" onClick={registerEmpl}>
                                         저장
                                     </Button>
-                                    {/* antd Button 때문에 에러가 일어나는것 같아*/}
-                                    {/* <Button id="closeBnt" htmlType="submit" onClick={handleClose}>
-                                        닫기
-                                    </Button>
-                                    <Button id="saveBnt" htmlType="submit" onClick={registerEmpl}>
-                                        저장
-                                    </Button> */}
                                 </div>
                             </form>
                         </AddEmplModalBoxStyled>
@@ -345,6 +350,194 @@ const AddEmployeeModal = () => {
                 </Modal>
             </div>
         </MngComponentsStyled>
+
+        // <MngComponentsStyled>
+        //     <div>
+
+        //         <Modal
+        //             open={addEmployeeModalOpen}
+        //             onClose={handleClose}
+        //             aria-labelledby="modal-modal-title"
+        //             aria-describedby="modal-modal-description"
+        //         >
+        //             <Box sx={style} className="addEmplMuiModalBox">
+        //                 <AddEmplModalBoxStyled>
+
+        //                     <form onSubmit={addEmployeeFormik.handleSubmit}>
+        //                         <TextField
+        //                             className="addEmplTitleTextField"
+        //                             id="standard-basic"
+        //                             label="직원정보"
+        //                             variant="standard"
+        //                         />
+        //                         <div className="emplModalBox">
+
+        //                             <TextField
+        //                                 id="filled-basic"
+        //                                 label="사원 번호"
+        //                                 className="addEmplInputBox"
+        //                                 name="emplNo"
+        //                                 onChange={addEmployeeFormik.handleChange}
+        //                                 value={addEmployeeFormik.values.emplNo}
+        //                                 size='small'
+        //                             />
+        //                             <TextField
+        //                                 id="filled-basic"
+        //                                 label="직원 이름"
+        //                                 className="addEmplInputBox"
+        //                                 name="emplName"
+        //                                 onChange={addEmployeeFormik.handleChange}
+        //                                 value={addEmployeeFormik.values.emplName}
+        //                                 size='small'
+        //                             />
+        //                             <TextField
+        //                                 id="filled-basic"
+        //                                 label="직급"
+        //                                 className="addEmplInputBox"
+        //                                 name="emplRank"
+        //                                 onChange={addEmployeeFormik.handleChange}
+        //                                 value={addEmployeeFormik.values.emplRank}
+        //                                 size='small'
+        //                             />
+        //                         </div>
+
+        //                         <div className="emplModalBox">
+        //                             <TextField
+        //                                 id="filled-basic"
+        //                                 label="직원 이메일 주소"
+        //                                 className="addEmplInputBoxExp"
+        //                                 name="emplEmail"
+        //                                 onChange={addEmployeeFormik.handleChange}
+        //                                 value={addEmployeeFormik.values.emplEmail}
+        //                                 size='small'
+        //                             />
+        //                             <TextField
+        //                                 id="filled-basic"
+        //                                 label="본조직 이메일 주소"
+        //                                 className="addEmplInputBoxExp"
+        //                                 name="emplOrgEmail"
+        //                                 onChange={addEmployeeFormik.handleChange}
+        //                                 value={addEmployeeFormik.values.emplOrgEmail}
+        //                                 size='small'
+        //                             />
+        //                         </div>
+
+        //                         <div className="emplModalBox">
+        //                             <TextField
+        //                                 id="filled-basic"
+        //                                 label="액세스권한"
+        //                                 className="addEmplInputBox"
+        //                                 name="emplAccessAuth"
+        //                                 onChange={addEmployeeFormik.handleChange}
+        //                                 value={addEmployeeFormik.values.emplAccessAuth}
+        //                                 size='small'
+        //                             />
+        //                             <TextField
+        //                                 id="filled-basic"
+        //                                 label="본조직"
+        //                                 className="addEmplInputBox"
+        //                                 name="emplOrgOrganization"
+        //                                 onChange={addEmployeeFormik.handleChange}
+        //                                 value={addEmployeeFormik.values.emplOrgOrganization}
+        //                                 size='small'
+        //                             />
+        //                             <TextField
+        //                                 id="filled-basic"
+        //                                 label="관리조직"
+        //                                 className="addEmplInputBox"
+        //                                 name="emplMngOrganization"
+        //                                 onChange={addEmployeeFormik.handleChange}
+        //                                 value={addEmployeeFormik.values.emplMngOrganization}
+        //                                 size='small'
+        //                             />
+        //                         </div>
+
+        //                         <div className="emplModalBox">
+        //                             <TextField
+        //                                 id="filled-basic"
+        //                                 label="기초연차"
+        //                                 className="addEmplInputBox"
+        //                                 name="emplBeginningVacation"
+        //                                 onChange={addEmployeeFormik.handleChange}
+        //                                 value={addEmployeeFormik.values.emplBeginningVacation}
+        //                                 size='small'
+        //                             />
+
+        //                             <FormControlLabel
+        //                                 control={<Checkbox defaultChecked />}
+        //                                 sx={{ marginLeft: 2, width: 600 }}
+        //                                 label="연차발생여부(기본값:여)"
+        //                                 name="emplMngOrganization"
+        //                                 onChange={addEmployeeFormik.handleChange}
+        //                                 value={addEmployeeFormik.values.emplOccurrenceVacation}
+        //                             />
+        //                         </div>
+        //                         <div className="emplModalBox">
+        //                             <TextField
+        //                                 id="filled-basic"
+        //                                 label="입사일"
+        //                                 className="addEmplInputBox"
+        //                                 name="emplJoinDate"
+        //                                 onChange={addEmployeeFormik.handleChange}
+        //                                 value={addEmployeeFormik.values.emplJoinDate}
+        //                                 size='small'
+        //                             />
+
+        //                             <Checkbox
+        //                                 // 퇴사여부 체크박스
+        //                                 sx={{ marginLeft: 2 }}
+        //                                 name="emplRetire"
+        //                                 onChange={(e) => {
+        //                                     addEmployeeFormik.handleChange(e);
+        //                                     retireCheckBox();
+        //                                 }}
+        //                                 value={addEmployeeFormik.values.emplRetire}
+        //                             />
+        //                             <div className={`addEmplRetireTextBox ${retireTextBoxClose ? 'hide' : 'show'}`}>
+        //                                 퇴사여부(기본값:부)
+        //                             </div>
+
+        //                             <TextField
+        //                                 id="filled-basic"
+        //                                 label="퇴사일"
+        //                                 className={`addEmplRetireDateBox ${retireDateBoxOpen ? 'show' : 'hide'}`}
+        //                                 name="emplRetireDate"
+        //                                 onChange={addEmployeeFormik.handleChange}
+        //                                 value={addEmployeeFormik.values.emplRetireDate}
+        //                                 size='small'
+        //                             />
+        //                         </div>
+
+        //                         <div className="emplModalBox">
+        //                             <TextField
+        //                                 id="filled-basic"
+        //                                 label="전화번호"
+        //                                 className="addEmplInputBox"
+        //                                 name="emplPhoneNo"
+        //                                 onChange={addEmployeeFormik.handleChange}
+        //                                 value={addEmployeeFormik.values.emplPhoneNo}
+        //                                 size='small'
+        //                             />
+        //                             <div className="addComment">* 입력된 전화번호로 직원 합류 코드 발송 됩니다</div>
+        //                         </div>
+
+        //                         <br />
+        //                         <div className="emplBtnBox">
+        //                             <Button variant="outlined" className='closeBnt' onClick={handleClose}>
+        //                                 닫기
+        //                             </Button>
+
+        //                             <Button variant="contained" className='saveBnt' onClick={registerEmpl}>
+        //                                 저장
+        //                             </Button>
+
+        //                         </div>
+        //                     </form>
+        //                 </AddEmplModalBoxStyled>
+        //             </Box>
+        //         </Modal>
+        //     </div>
+        // </MngComponentsStyled>
     );
 };
 export default AddEmployeeModal;

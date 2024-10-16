@@ -1,6 +1,6 @@
 import OrganizationMngPage from "@/features/DashBoardPage/Mng/OrganizationMng"
 
-const organizationMng = ()=>{
+const OrganizationMng = ()=>{
     return <OrganizationMngPage/>
 }
-export default organizationMng
+export default OrganizationMng

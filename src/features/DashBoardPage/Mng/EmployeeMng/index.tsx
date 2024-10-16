@@ -5,6 +5,8 @@ import { MngPageStyled } from '../styled';
 import { sideBarData } from '@/components/SideBar/controllor';
 // import ApiOutlinedIcon from '@mui/icons-material/ApiOutlined';
 import AddEmployeeModal from '@/components/DashBoardBody/Mng/EmployeeMng/AddEmployeeModal';
+import EmployeeInfo from '@/components/DashBoardBody/Mng/EmployeeMng/EmployeeInfo';
+import CallTest from '@/components/DashBoardBody/Mng/EmployeeMng/EmployeeInfo/callTest';
 
 
 const EmployeeMngPage = () => {
@@ -18,6 +20,7 @@ const EmployeeMngPage = () => {
             <div className="MainWrap">
                 
                 <MngPageStyled>
+                    {/* 페이지 상단 이름과 Btn */}
                     <div className="TopArea">
                         <div className="pageTile">
                             {moduleName?.name && menuName?.name
@@ -27,7 +30,12 @@ const EmployeeMngPage = () => {
                         <div><EmployeeMngTopBtn /></div>
                         
                     </div>
-                    <div className="bodyArea"></div>
+
+                    {/* 직원 정보 조회된 화면 */}
+                    <div className="bodyArea">
+                        <EmployeeInfo/>
+                        {/* <CallTest/> */}
+                    </div>
                     
                     <AddEmployeeModal/>
                 </MngPageStyled>

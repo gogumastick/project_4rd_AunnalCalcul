@@ -25,15 +25,17 @@ export const AddEmplModalBoxStyled = styled.div`
             color: blue;
         }
     }
+    
+    
     .emplModalBox {
-        padding: 5px;
         display: flex;
-        flex-wrap: nowrap; /* 요소가 줄 바꿈되지 않도록 설정 */
+        flex-direction: row; /* 가로로 정렬 */
         align-items: center; /* 세로축 정렬 */
-        /* justify-content: center; */
-        /* border: 10px solid ; */
+        justify-content: start; /* 가로축 정렬 */
+        padding: 5px;
+        /* border: solid 1px red; */
     }
-
+    
     .addEmplInputBox {
         margin: 10px 10px 0px 5px;
         width: 200px;
@@ -51,6 +53,7 @@ export const AddEmplModalBoxStyled = styled.div`
         /* background-color: blue; */
     }
     .addEmplRetireTextBox {
+        padding-top :7px;
         width: 150px;
         /* background-color: gray; */
         display: flex;
@@ -93,11 +96,18 @@ export const AddEmplModalBoxStyled = styled.div`
         width: 200px; /* 텍스트 보여질 때 너비 */
         opacity: 1;
     }
-    .addComment {
+    /* .addEmplCheckBox{
+        border : solid 1px red;
+
+    } */
+    .addEmplComment {
         margin-left: 25px;
+        padding-top :7px;
+        height : 50px;
         display: flex;
         justify-content: start; /* 가로축 정렬 */
         align-items: center; /* 세로축 정렬 */
+        /* border: solid 1px red; */
     }
     .emplBtnBox {
         display: flex;
